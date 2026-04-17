@@ -1,11 +1,11 @@
 public class Concierto {
     private int id;
-    private String artista;
+    private int artista;
     private String fecha;
     private String lugar;
     private double precioEntrada;
 
-    public Concierto(int id, String artista, String fecha, String lugar, double precioEntrada) {
+    public Concierto(int id, int artista, String fecha, String lugar, double precioEntrada) {
         this.id = id;
         this.artista = artista;
         this.fecha = fecha;
@@ -21,11 +21,11 @@ public class Concierto {
         this.id = id;
     }
 
-    public String getArtista() {
+    public int getArtista() {
         return artista;
     }
 
-    public void setArtista(String artista) {
+    public void setArtista(int artista) {
         this.artista = artista;
     }
 

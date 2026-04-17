@@ -1,11 +1,11 @@
 public class Entrada {
     private int id;
-    private String concierto;
+    private int concierto;
     private String comprador;
     private int cantidad;
     private String fechaCompra;
 
-    public Entrada(int id, String concierto, String comprador, int cantidad, String fechaCompra) {
+    public Entrada(int id, int concierto, String comprador, int cantidad, String fechaCompra) {
         this.id = id;
         this.concierto = concierto;
         this.comprador = comprador;
@@ -21,11 +21,11 @@ public class Entrada {
         this.id = id;
     }
 
-    public String getConcierto() {
+    public int getConcierto() {
         return concierto;
     }
 
-    public void setConcierto(String concierto) {
+    public void setConcierto(int concierto) {
         this.concierto = concierto;
     }
 
