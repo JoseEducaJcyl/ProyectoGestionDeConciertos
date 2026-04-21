@@ -127,23 +127,44 @@ public class MenuConciertos {
                     }
                     break;
                     
-                case 3: // ELIMINAR CONCIERTO
+                case 3: // ELIMINAR CONCIERTO (solo si no tiene entradas)
                     try {
                         System.out.println("SELECCIONA CONCIERTO A ELIMINAR (Por ID):");
                         int id_concierto = sc.nextInt();
                         sc.nextLine();
+        
                         conexion = DriverManager.getConnection(url, usuario, contrasenia);
-                        String sql = "DELETE FROM CONCIERTO WHERE id = ?";
-                        
-                        ps = conexion.prepareStatement(sql);
-                        ps.setInt(1, id_concierto);
-                        ps.executeUpdate();
+        
+                        // Verificar si tiene entradas
+                        String checkSql = "SELECT COUNT(*) AS total FROM ENTRADA WHERE concierto_id = ?";
+                        int totalEntradas = 0;
+                        try (PreparedStatement checkPs = conexion.prepareStatement(checkSql)) {
+                            checkPs.setInt(1, id_concierto);
+                            ResultSet rs = checkPs.executeQuery();
+                            if (rs.next()) {
+                                totalEntradas = rs.getInt("total");
+                            }
+                        }
+        
+                if (totalEntradas > 0) {
+                    System.out.println("ERROR: No se puede eliminar el concierto porque tiene " + 
+                               totalEntradas + " entradas vendidas.");
+                    System.out.println("Elimine primero las entradas asociadas.");
+                } else {
+                    String sql = "DELETE FROM CONCIERTO WHERE id = ?";
+                    try (PreparedStatement psDelete = conexion.prepareStatement(sql)) {
+                        psDelete.setInt(1, id_concierto);
+                        psDelete.executeUpdate();
                         System.out.println("CONCIERTO ELIMINADO CORRECTAMENTE");
-                        
+                    }
+                }
+        
                     } catch (SQLException e) {
                         System.out.println("Error al eliminar el concierto: " + e.getMessage());
+                    } finally {
+                        if (conexion != null) conexion.close();
                     }
-                    break;
+                break;
                     
                 case 4: // SALIR
                     System.out.println("Saliendo del menu conciertos...");
