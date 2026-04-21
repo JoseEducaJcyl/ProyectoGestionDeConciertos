@@ -140,7 +140,7 @@ public class MenuConciertos {
                         int totalEntradas = 0;
                         try (PreparedStatement checkPs = conexion.prepareStatement(checkSql)) {
                             checkPs.setInt(1, id_concierto);
-                            ResultSet rs = checkPs.executeQuery();
+                            rs = checkPs.executeQuery();
                             if (rs.next()) {
                                 totalEntradas = rs.getInt("total");
                             }
